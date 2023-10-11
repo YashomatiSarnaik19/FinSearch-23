@@ -4,4 +4,4 @@ In this project we have created a self learning agent using Q-learning to optimi
 We also created benchmark models based on ARIMA and LSTM for price prediction to compare the efficiency of our RL model.<br><br><br>
 Group members : PiyushiAnand, 
                 Mahak Sahu, 
-                Sachi Deshmukh
+                Sachi Deshmukh, Yashomati Sarnaik 
