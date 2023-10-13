@@ -1,0 +1,174 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{subcaption}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage[rightcaption]{sidecap}
+\usepackage{verbatim}
+\usepackage[backend=bibtex]{biblatex}
+\usepackage[a4paper, hmargin=1.2in, bottom=1.5in]{geometry}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+\titleformat{\section}
+    {\normalfont\huge\bfseries\color{teal}}
+    {\thesection}{1em}{}
+    
+\titleformat{\subsection}
+    {\normalfont\Large\bfseries\color{orange}}
+    {\thesubsection}{1em}{}
+
+% Add header and footer code here
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{Quantum Computing}
+\fancyfoot[C]{\thepage}
+
+\begin{document}
+% Preamble
+
+\begin{titlepage}
+    \begin{center}
+        \vspace*{1cm}
+            
+        \Huge
+        \textbf{FINSEARCH - Roadmap 1}
+            
+        \vspace{0.5cm}
+        \LARGE
+        Using Reinforcement Learning
+            
+        \vspace{1.5cm}
+            
+        \textbf{A report by Team :  \\ Mahak Sahu \\ Piyushi Anand \\Sachi Deshmukh \\ Yashomati Sarnaik}
+            
+        \vfill
+            
+        A thesis presented for the degree of\\
+        Doctor of Philosophy FUCK YOU
+            
+        \vspace{0.8cm}
+            
+        \Large
+        Department Name\\
+        University Name\\
+        Country\\
+        Date
+            
+    \end{center}
+\end{titlepage}
+
+% Table of Contents
+\newpage
+\tableofcontents
+\clearpage
+\section{Introduction}
+\textbf{What is Algorithmic Trading?} \\ Algorithmic trading (also called automated trading, black-box trading, or algo-trading) uses a computer program that follows a defined set of instructions (an algorithm) to place a trade. The trade, in theory, can generate profits at a speed and frequency that is impossible for a human trader. \\ The defined sets of instructions are based on timing, price, quantity, or any mathematical model. Apart from profit opportunities for the trader, algo-trading renders markets more liquid and trading more systematic by ruling out the impact of human emotions on trading activities.
+\begin{itemize}
+    \item Common trading strategies include trend-following strategies, arbitrage opportunities, and index fund re-balancing. 
+    \item Algorithmic trading is also executed based on trading volume (volume-weighted average price) or the passage of time (time-weighted average price). 
+\end{itemize}
+Currently, algorithms utilized in Algorithmic Trading can be categorized into two main types: Traditional Algorithms and RL Algorithms. Here's an overview of each category: 
+\begin{itemize}
+    \item \textbf{Traditional Algorithms} \\
+    \item \textbf{RL Algorithms} \\
+    Reinforcement learning (RL) is a branch of machine learning that involves an agent learning to make sequential decisions in an environment to maximize a reward signal. RL has gained popularity in the field of trading because it provides a framework to make adaptive trading decisions based on historical data and real-time market information.
+    In the context of trading, reinforcement learning can be used to develop trading strategies that optimize various objectives such as maximizing profit, minimizing risk, or outperforming a benchmark index.
+\end{itemize}
+This report aims to analyze key features that are crucial in a Trading Strategy and provides a comparative assessment of how Traditional and Reinforcement Learning approaches perform in each aspect.
+\clearpage
+\section{Accuracy}
+Undoubtedly, accuracy takes precedence when selecting a trading strategy. However, it's important to note that both RL and Traditional approaches have their respective accuracies along with certain drawbacks.
+\begin{itemize}
+    \item \textit{Traditional Algorithms}
+    \begin{itemize}
+        \item \textbf{Advantages: }Traditional algorithms, unlike RL algorithms, are deterministic in nature, which ensures reliable and predictable outcomes. This characteristic contributes to their inherent accuracy. Additionally, traditional algorithms leverage extensive historical data analysis to identify patterns and make accurate predictions. This enables traders to effectively capitalize on historical market behavior, leading to more precise and informed trading decisions.
+        \item \textbf{Shortcomings: }Indeed, one drawback of traditional algorithms is their limited adaptability. While they may provide accurate predictions based on historical data, there is a risk that these predictions may not hold true in the future. Market dynamics are subject to change, and traditional algorithms may struggle to adjust to evolving conditions. This lack of adaptability can limit their effectiveness in capturing shifting trends and may lead to suboptimal trading decisions over time.
+    \end{itemize}
+    \item \textit{RL Algorithms}
+    \begin{itemize}
+        \item \textbf{Advantages: }RL algorithms surpass traditional algorithms in adaptability. They learn from interactions with the environment, optimizing accuracy as market dynamics evolve. RL algorithms automatically extract relevant features from raw data, eliminating the need for manual feature engineering and capturing subtle patterns. They optimize trading policies by maximizing cumulative rewards, enhancing accuracy in identifying profitable opportunities while minimizing losses.
+        \item \textbf{Shortcomings: }Overfitting is a major concern in RL, where accurate results on the training dataset may not extend to other datasets. Achieving accuracy in RL requires balancing exploration and exploitation. Failing to strike this balance hinders accuracy in trading decisions.
+    \end{itemize}
+\end{itemize}
+\section{Adaptability}
+In the dynamic landscape of markets, it is crucial for trading strategies to continually optimize themselves and align with evolving market trends. Here is an analysis of how traditional and RL algorithms perform in this regard:
+\begin{itemize}
+    \item \textit{Traditional Algorithms} 
+    \begin{itemize}
+        \item \textbf{Advantages: }Traditional algorithms excel in stationary environments where the underlying dynamics and relationships between variables remain stable over time. However, in terms of adaptability, these algorithms heavily rely on human intervention for adjustments. The simplicity and interpretability of traditional algorithms facilitate easier human intervention for optimization purposes.
+        \item \textbf{Shortcomings: }Traditional algorithms indeed face a disadvantage compared to RL in terms of adaptability. These algorithms rely on predefined parameters and rules, which limit their capacity for \textit{Exploration}, i.e., the ability to discover and adopt new strategies. As a result, they may struggle to adapt to changing market conditions and may struggle to adjust to new patterns or events.
+    \end{itemize}
+    \item \textit{RL Algorithms} 
+    \begin{itemize}
+        \item \textbf{Advantages: }RL algorithms have a distinct advantage in adaptability, as they can dynamically adjust to changing market conditions and learn from experience. These algorithms possess the capability to update their trading strategies based on new information and modify their behavior accordingly. This adaptability proves particularly valuable in dynamic and volatile markets where traditional algorithms may struggle to keep pace. RL algorithms enable exploration of diverse trading strategies, facilitating the discovery of advantageous approaches. It has the ability to explore a wide range of actions and evaluate their consequences to find optimal strategies.
+        \item \textbf{Shortcomings: }RL algorithms are not without shortcomings. The adaptive behavior of RL can potentially lead to aggressive or risky trading strategies, particularly if the reward function is not carefully designed. While exploration is an attractive feature of RL, an imbalanced exploration-exploitation trade-off can have adverse effects(Here exploitation involves leveraging the learned knowledge to maximize immediate rewards). Too much exploration may result in excessive risk-taking and suboptimal decision-making, while too much exploitation can lead to missed opportunities and failure to adapt to changing market conditions. Finding this balance is challenging because financial markets are complex, dynamic, and often subject to non-stationarity. The challenge lies in designing an exploration-exploitation strategy that allows the RL agent to explore sufficiently to discover profitable trading strategies while still exploiting the knowledge gained to make effective decisions.
+    \end{itemize}
+\end{itemize}
+\section{Reliability}
+In terms of reliability, both Traditional and RL Algorithms exhibit effectiveness in specific market conditions while performing poorly in others. Let's examine their performance in different scenarios:
+\begin{itemize}
+    \item \textit{Traditional Algorithms} 
+    \begin{itemize}
+        \item \textbf{Advantages: }Traditional Algorithms are known for their simplicity and interpretability, which contributes to their predictable outcomes. Their deterministic nature, based on predefined rules and logic, enhances their reliability. Traditional algorithms excel in low-volatility markets and can even mitigate sudden market changes or shifts.
+        \item \textbf{Shortcomings: }Traditional Algorithms may face challenges in producing reliable results in dynamic or rapidly changing markets. Their limited adaptability can hinder their performance in such scenarios. Traditional algorithms often make assumptions about market behavior and rely on specific market models. If these assumptions are incorrect or the market dynamics undergo significant changes, the reliability of traditional algorithms can deteriorate. It thus becomes important to consider the limitations of traditional algorithms when operating in dynamic market environments.
+    \end{itemize}
+    \item \textit{RL Algorithms} 
+    \begin{itemize}
+        \item \textbf{Advantages: }Financial markets are often characterized by non-stationarity, where underlying dynamics can change over time. RL algorithms can adapt to these changes by continuously updating their policies using new data. This makes them well-suited for dynamic and volatile markets where traditional algorithms may struggle. In contrast, traditional algorithms face difficulties in adapting to non-stationary markets without manual adjustments.
+        \item \textbf{Shortcomings: }Unlike traditional algorithms, RL techniques do not provide deterministic guarantees. The decisions made by RL algorithms are probabilistic in nature and are influenced by inherent market uncertainties, resulting in potentially varied outcomes when tested on the same market conditions. Furthermore, the lack of interpretability in RL models can pose challenges in explaining and justifying trading decisions, potentially impacting the trustworthiness and reliability of the algorithm. It is important to consider these factors when assessing the reliability of RL algorithms in trading scenarios.
+    \end{itemize}
+\end{itemize}
+\section{Computational Requirements}
+
+\begin{itemize}
+    \item \textit{Traditional Algorithms} 
+    \begin{itemize}
+        \item \textbf{Advantages: }
+        \item \textbf{Shortcomings: }
+    \end{itemize}
+    \item \textit{RL Algorithms} 
+    \begin{itemize}
+        \item \textbf{Advantages: }
+        \item \textbf{Shortcomings: }
+    \end{itemize}
+\end{itemize}
+\section{Speed and Decision-Making}
+\begin{itemize}
+    \item \textit{Traditional Algorithms} 
+    \begin{itemize}
+        \item \textbf{Advantages: }
+        \item \textbf{Shortcomings: }
+    \end{itemize}
+    \item \textit{RL Algorithms} 
+    \begin{itemize}
+        \item \textbf{Advantages: }
+        \item \textbf{Shortcomings: }
+    \end{itemize}
+\end{itemize}
+\section{Convenience And Dependency}
+\begin{itemize}
+    \item \textit{Traditional Algorithms} 
+    \begin{itemize}
+        \item \textbf{Advantages: }
+        \item \textbf{Shortcomings: }
+    \end{itemize}
+    \item \textit{RL Algorithms} 
+    \begin{itemize}
+        \item \textbf{Advantages: }
+        \item \textbf{Shortcomings: }
+    \end{itemize}
+\end{itemize}
+% Conclusion
+\section{Further Plan Of Action}
+\end{document}

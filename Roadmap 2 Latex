@@ -1,0 +1,165 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{subcaption}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage[rightcaption]{sidecap}
+\usepackage{verbatim}
+\usepackage[backend=bibtex]{biblatex}
+\usepackage[a4paper, hmargin=1.2in, bottom=1.5in]{geometry}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+\titleformat{\section}
+    {\normalfont\huge\bfseries\color{teal}}
+    {\thesection}{1em}{}
+    
+\titleformat{\subsection}
+    {\normalfont\Large\bfseries\color{orange}}
+    {\thesubsection}{1em}{}
+
+% Add header and footer code here
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{FinSearch}
+\fancyfoot[C]{\thepage}
+
+\begin{document}
+% Preamble
+
+\begin{titlepage}
+    \begin{center}
+        \vspace*{1cm}
+            
+        \Huge
+        \textbf{FinSearch} \\
+
+        \vspace{0.5 cm}
+        \Huge
+        \textbf{Roadmap 2}
+            
+        \vspace{0.5cm}
+        \LARGE
+        Use Deep Reinforcement Learning to Optimise Stock Trading Strategy and thus, Maximise Investment Return
+            
+        \vspace{0.5cm}
+            
+        \textbf{A report by Team:  \\ Mahak Sahu \\ Piyushi Anand \\Sachi Deshmukh \\ Yashomati Sarnaik}
+            
+            
+        \vspace{0.8cm}
+            
+       \tableofcontents
+            
+    \end{center}
+\end{titlepage}
+
+\section{Code Overview}
+Before moving forward, let's have a brief overview of the code to familiarize ourselves with the terms that will be used in the report.
+\subsection{Variables}
+
+\begin{itemize}
+    \item \textbf{num\_actions}: The number of actions available to the agent, representing "Buy" (1) or "Hold" (0).
+    \item \textbf{action\_mapping}: A dictionary that maps action indices to their respective names (e.g., {0: 'Hold', 1: 'Buy'}).
+    \item \textbf{q\_table}: A 2D tensor representing the Q-table, initialized with zeros and random values for Q-learning.
+    \item \textbf{num\_train\_states}: The number of training states, i.e., the number of rows in the train\_data\_normalized.
+    \item \textbf{num\_test\_states}: The number of testing states, i.e., the number of rows in the test\_data\_normalized.
+    \item \textbf{num\_epochs}: The number of training epochs for Q-learning.
+    \item \textbf{epsilon}: The exploration rate for the epsilon-greedy policy.
+    \item \textbf{gamma}: The discount factor for the Bellman equation.
+    \item \textbf{replay\_buffer}: A list used to store experiences for experience replay in Q-learning.
+    \item \textbf{batch\_size}: The size of the batch used for experience replay.
+    \item \textbf{target\_update\_freq}: The frequency of updating the target Q-table in Q-learning.
+    \item \textbf{target\_q\_table}: A copy of the Q-table used for updating the target Q-table during training.
+\end{itemize}
+
+\subsection{Functions}
+
+\begin{itemize}
+    \item \textbf{get\_state(state\_index, data)}: This function takes the state index and data and returns the state representation. It considers a lookback window of previous time steps to create the state vector.
+    \item \textbf{epsilon\_greedy\_policy(state, q\_table, epsilon)}: The epsilon-greedy policy function implements the exploration strategy. It selects a random action with probability "epsilon" and the action with the highest Q-value with probability (1 - epsilon).
+    \item \textbf{bellman\_equation(state, action, reward, next\_state\_index, q\_table)}: The Bellman equation function updates the Q-value for a state-action pair using the Q-learning update rule. It considers the reward obtained and the maximum Q-value for the next state.
+\end{itemize}
+ After training, the agent's trading strategy is tested on the test data to calculate profits gained over time, which are then visualized using Matplotlib. Now, let's explore the key components of RL, namely State Representation, Reward Function, Action Space, and Hyperparameter Tuning, and examine how they are implemented and utilized in the model. 
+\section{State Representation}
+The state function in this code serves the purpose of providing a concise representation of the relevant historical prices as input to the reinforcement learning algorithm. Here are a few reasons why this state function is useful:
+\begin{itemize}
+    \item \textbf{Captures temporal information: }By considering a lookback window of previous time steps, the state function captures the temporal aspect of the data. It includes information about past prices, which can be valuable for making informed decisions about the current state.
+
+    \item \textbf{Reduces dimensionality: }Instead of using the entire historical price sequence as the state, the function flattens the selected portion of the data into a one-dimensional array. This helps reduce the dimensionality of the state representation, making it more manageable and computationally efficient.
+    
+    \item \textbf{Focuses on recent information: }By selecting a subset of the most recent time steps, the state function prioritizes recent information over older data. This can be beneficial in capturing short-term trends and patterns that may be more relevant for decision-making in certain scenarios.
+    
+    \item \textbf{Considers the current price: }The state function includes the current price as part of the state representation. This allows the agent to take into account the immediate context when making decisions, as the current price can provide valuable information about the current market situation.
+\end{itemize}
+
+Overall, the state function is designed to capture relevant information from the historical price data in a concise and informative manner. By considering a suitable lookback window and including the current price, it provides the agent with the necessary information to make decisions based on the current state and past trends.
+
+\section{Action Space}
+
+We have decided that the actions in our trading strategy will include buying and holding of stocks and we have trained our model to do the same accordingly.
+
+When it comes to comparing the trading strategy of buying and holding stocks versus buying, holding, and selling stocks, there are a few key points to consider in explaining why the former tends to yield more profit over time.
+\begin{itemize}
+    \item \textbf{Long-Term Market Trends: }The stock market generally exhibits an upward trend over the long term. Despite short-term volatility and fluctuations, historical data has shown that stock markets have experienced overall growth. By buying and holding stocks for extended periods, investors can benefit from capitalizing on the upward trajectory of the market.
+
+    \item \textbf{Timing the Market: }Timing the market accurately is notoriously difficult, even for experienced investors. Successfully identifying the optimal moments to buy and sell stocks consistently is a challenging task. Market timing requires making accurate predictions about future price movements, which is influenced by a multitude of factors such as economic indicators, geopolitical events, and investor sentiment. It is extremely challenging to consistently time the market effectively, leading to potential losses if the timing is incorrect.
+    
+    \item \textbf{Transaction Costs: }Frequent buying and selling of stocks incurs transaction costs, such as brokerage fees and taxes. These costs can eat into the overall returns generated by trading activities. By adopting a buy-and-hold strategy, investors can reduce transaction costs significantly as they are not actively trading or incurring frequent buying and selling expenses.
+    
+    \item \textbf{Emotional Bias and Investor Psychology: }Emotions play a significant role in investment decision-making. Investors often fall prey to emotional biases, such as fear and greed, which can lead to irrational buying and selling decisions. Emotional trading based on short-term market fluctuations can result in selling stocks prematurely during dips or buying stocks impulsively during rallies. A buy-and-hold strategy helps mitigate emotional biases, allowing investors to take a more rational, long-term perspective on their investments.
+    
+    \item \textbf{Compound Interest and Dividends: }By holding stocks over the long term, investors have the potential to benefit from the power of compounding. As stock prices increase, the value of the investment grows. Additionally, many companies offer dividends to shareholders, which can be reinvested to further enhance returns. By consistently reinvesting dividends and allowing them to compound over time, investors can generate additional wealth.
+\end{itemize}
+It's important to note that while the buy-and-hold strategy has generally been proven to be effective, it doesn't guarantee profits in every individual case. Market conditions, individual stock performance, and other factors can influence outcomes. Therefore, it's crucial for investors to conduct thorough research, diversify their portfolios, and consider their risk tolerance and investment goals before implementing any strategy.
+\section{Reward Function}
+
+The reward function in RL plays a pivotal role as it defines the learning objective and shapes the agent's behavior. It provides immediate feedback to reinforce desirable actions and helps the agent understand the consequences of its decisions. \vspace{0.30cm} \\ When not implemented properly, issues like sparse rewards (limited feedback), reward hacking (exploiting loopholes in the reward signal), and unintended agent behavior can arise, hindering effective learning. \vspace{0.3cm} \\ The reward function used in this implementation is straightforward, based on the change in portfolio value after taking an action. The simplicity of the reward function used in the implementation helps the agent focus on the main objective of maximizing profits. It encourages the agent to maximize profits by buying when beneficial and holding otherwise.\vspace{0.3cm} \\ The reward function is defined as the change in the value of the portfolio after taking an action. The value of the portfolio is calculated based on the number of shares the agent holds and the price of the asset. \vspace{0.3cm} \\ This calculated value of the reward is then used in determining the Q value of the state through bellman\_equation function. In this the Q value is decided from the reward generated by the current state-action pair and maximum cumulative future rewards. \vspace{0.3cm} \\     This reward function aligns with the objective of maximizing profits in the financial market. The agent learns to associate the states (representing historical price data) with actions (buy or hold) that lead to higher portfolio values and, consequently, higher profits. The positive rewards for actions that result in gains and negative rewards for actions leading to losses provide a clear signal for the agent to learn a profitable trading strategy.
+\clearpage
+\section{Training And Testing}
+\subsection{Training Data}
+The training data, represented by the train\_data Pandas DataFrame, is used to train the Q-learning agent to make decisions on when to buy or hold a financial instrument (in this case, represented as the Nifty50 index). \vspace{0.3cm} \\ The training data is first normalized using Min-Max scaling using the MinMaxScaler from sklearn.preprocessing. Normalization scales the data between 0 and 1, which is a common preprocessing step for neural networks and Q-learning. is used to train the Q-learning agent to make decisions on when to buy or hold a financial instrument.
+\subsection{Testing Data}
+The testing data, represented by the test\_data Pandas DataFrame, is used to evaluate the performance of the Q-learning agent after it has been trained using the training data. \vspace{0.3cm} \\ The testing phase involves using the trained Q-table to make decisions based on the states provided by the testing data. \vspace{0.3cm} \\ The Q-learning agent selects actions (buy or hold) based on the epsilon-greedy policy using the testing data states and the trained Q-table. \vspace{0.3cm} \\ The agent's actions during the testing phase are based on its learned policy from the training data. \vspace{0.3cm} \\ The agent tracks the profits gained over time during the testing phase and visualizes the results using Matplotlib. \vspace{0.3cm} \\
+In summary, the training data is used to train the Q-learning agent by updating the Q-table, and the testing data is used to evaluate the performance of the trained agent by simulating its actions on unseen data and measuring the profits gained over time. 
+
+\section{Fine-Tuning}
+
+Fine-tuning in the context of reinforcement learning involves adjusting hyperparameters, such as epsilon, gamma, and num\_epochs, to find better configurations that improve the performance of the Q-learning algorithm. \\ Here's how you can perform fine-tuning for these parameters in the provided code: 
+\begin{itemize}
+    \item 
+Epsilon (epsilon): Epsilon is a hyperparameter that controls the exploration-exploitation trade-off in the epsilon-greedy policy. A higher value of epsilon encourages more exploration (random actions), while a lower value emphasizes exploitation (choosing actions with the highest Q-values). 
+To perform fine-tuning for epsilon: 
+First, define a range of values for epsilon that you want to explore. For example, you can create an array of different epsilon values, such as [1.0, 0.5, 0.1, 0.05]. 
+Then, modify the training loop to loop over the different epsilon values and run the training process for each value. You can do this by adding an outer loop around the existing training loop, like this: 
+python code: 
+epsilon\_values = [1.0, 0.5, 0.1, 0.05] for epsilon in epsilon\_values: # ... Rest of the code ... for i in range(num\_epochs): epsilon\_greedy\_policy(state, q\_table, epsilon) # ... Rest of the training loop ...\\ $ epsilon *= 0.3 $ # You can adjust the decay rate for each epsilon value if needed.  
+Gamma (gamma): Gamma is a discount factor that determines the importance of future rewards compared to immediate rewards in the Bellman equation. A higher gamma value gives more weight to future rewards, while a lower value emphasizes immediate rewards. 
+To perform fine-tuning for gamma: 
+Follow a similar approach as epsilon fine-tuning. Define a range of gamma values and loop over them in the training process: 
+python code: 
+gamma\_values = [0.9, 0.95, 0.98, 0.99] for gamma in gamma\_values: # ... Rest of the code ... for i in range(num\_epochs): # ... Rest of the training loop ...  
+\item \textbf{Number of Epochs (num\_epochs): }The number of epochs determines how many times the agent will iterate over the training data to update the Q-table. Too few epochs may lead to insufficient learning, while too many epochs might overfit the Q-table to the training data. \\
+To perform fine-tuning for the number of epochs: 
+\begin{itemize}
+    \item Define a range of values for the number of epochs you want to explore, such as [20, 30, 40, 50]. 
+    \item Adjust the outer loop over the number of epochs: 
+\end{itemize} \textbf{Python code}\\
+num\_epochs\_values = [20, 30, 40, 50] for num\_epochs in num\_epochs\_values: \\ \# ... Rest of the code ...  
+\end{itemize}
+By using these fine-tuning techniques, we can experiment with various combinations of epsilon, gamma, and the number of epochs to find the best hyperparameter values that result in improved performance for your specific reinforcement learning problem. Keep in mind that fine-tuning requires careful experimentation and observation of results to ensure we achieve the desired learning outcomes.
+\section{Output}
+\section{Conclusion}
+
+\end{document}
+
